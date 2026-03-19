@@ -807,9 +807,8 @@ else:
     st.balloons()
 
     if steps_remaining == 0:
-        st.success("🎉 Goal reached. Beautiful work today.")
+    st.success("🎉 Goal reached. Beautiful work today.")
     st.balloons()
-    st.markdown(
         """
         <audio autoplay>
             <source src="success.mp3" type="audio/mp3">
