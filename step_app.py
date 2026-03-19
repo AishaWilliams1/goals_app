@@ -378,6 +378,21 @@ def build_plan_from_tasks(tasks, steps_remaining, steps_per_minute, min_walk_blo
         extra_minutes_needed,
     )
 
+# 👇 FIRST: page config (optional but good)
+st.set_page_config(layout="wide")
+
+# 👇 THEN: your styling (THIS is where it goes)
+st.markdown(
+    """
+<style>
+footer {visibility: hidden;}
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
 
 # st.title("👣 Move Math")
 st.caption("Track your movement. Finish your goal.")
