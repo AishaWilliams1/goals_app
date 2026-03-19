@@ -810,4 +810,4 @@ if steps_remaining == 0:
     st.markdown("### 🔊 Tap to celebrate your win")
 
     if st.button("🎉 Play celebration sound"):
-        st.audio("success.mp3")
+        st.audio(open("success.mp3", "rb").read())
