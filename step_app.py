@@ -18,18 +18,6 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 
-timezone_name = st.selectbox(
-    "Your time zone",
-    [
-        "America/New_York",
-        "America/Chicago",
-        "America/Denver",
-        "America/Los_Angeles",
-        "UTC",
-    ],
-    index=0,
-)
-
 st.set_page_config(layout="wide")
 
 st.markdown(
@@ -480,6 +468,9 @@ progress_decimal = min(progress_percent / 100, 1.0)
 minutes_needed = steps_remaining / steps_per_minute if steps_per_minute > 0 else 0
 rounded_minutes = math.ceil(minutes_needed)
 
+minutes_needed = steps_remaining / steps_per_minute if steps_per_minute > 0 else 0
+rounded_minutes = math.ceil(minutes_needed)
+
 timezone_name = st.selectbox(
     "Your time zone",
     [
@@ -490,6 +481,7 @@ timezone_name = st.selectbox(
         "UTC",
     ],
     index=0,
+    key="timezone_name",
 )
 
 now_local = datetime.now(ZoneInfo(timezone_name)).replace(second=0, microsecond=0)
