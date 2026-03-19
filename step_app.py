@@ -703,6 +703,8 @@ history_df = load_history()
 
 st.subheader("Recent history")
 
+streak = 0
+
 if history_df.empty:
     st.write("No saved history yet. Save today’s progress to start tracking.")
 else:
@@ -759,22 +761,20 @@ else:
         else:
             break
 
-    #Track Streaks
     st.metric("Current goal streak", f"{streak} day(s)")
-if streak >= 3:
-    st.success("🔥 You're building momentum. Keep going.")
-if streak >= 7:
-    st.balloons()
-    st.success("🌟 7 day streak! This is a new identity forming.")
 
-#if steps_remaining == 0:
-    #st.success("🎉 Goal reached. Beautiful work today.")
-    #st.balloons()
+    if streak >= 3:
+        st.success("🔥 You're building momentum. Keep going.")
+    if streak >= 7:
+        st.balloons()
+        st.success("🌟 7 day streak! This is becoming a real habit.")
 
-   
+    # if steps_remaining == 0:
+    # st.success("🎉 Goal reached. Beautiful work today.")
+    # st.balloons()
 
     if steps_remaining == 0:
-     st.success("🎉 Goal reached. Beautiful work today.")
+        st.success("🎉 Goal reached. Beautiful work today.")
     st.balloons()
     st.markdown(
         """
