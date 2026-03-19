@@ -494,7 +494,7 @@ else:
     st.info(get_message(progress_percent))
 
 if steps_remaining == 0:
-    st.success("🎉 Goal reached. You Did That!!!.")
+    st.success("🎉🎯You Did That!!! Celebrate!!!")
     st.balloons()
 else:
     st.subheader("🎯 Your finish plan")
