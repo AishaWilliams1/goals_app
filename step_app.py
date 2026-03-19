@@ -6,6 +6,15 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+import math
+from datetime import datetime, timedelta
+from pathlib import Path
+import altair as alt
+
+import pandas as pd
+import streamlit as st
+
+st.set_page_config(layout="wide")
 
 st.markdown(
     """
@@ -378,8 +387,6 @@ def build_plan_from_tasks(tasks, steps_remaining, steps_per_minute, min_walk_blo
         extra_minutes_needed,
     )
 
-# 👇 FIRST: page config (optional but good)
-st.set_page_config(layout="wide")
 
 # 👇 THEN: your styling (THIS is where it goes)
 st.markdown(
@@ -405,39 +412,50 @@ goal_option = st.sidebar.radio(
     index=0,
 )
 
-if goal_option == "Custom":
-    goal_steps = st.sidebar.number_input(
-        "Custom goal steps",
-        min_value=1000,
-        max_value=50000,
-        value=7000,
-        step=500,
-    )
-else:
-    goal_steps = int(goal_option)
-
-current_steps = st.sidebar.number_input(
-    "Current steps",
-    min_value=0,
-    max_value=100000,
-    value=1500,
-    step=100,
-)
-
 activity = st.sidebar.selectbox(
     "Activity type",
     ["Regular walk", "Brisk walk", "Stairs", "March in place", "Custom"],
 )
 
+st.subheader("Your inputs")
+
+if goal_option == "Custom":
+    custom_goal_text = st.text_input("Custom goal steps", value="7000")
+    try:
+        goal_steps = int(custom_goal_text)
+        if goal_steps < 1000:
+            goal_steps = 1000
+        elif goal_steps > 50000:
+            goal_steps = 50000
+    except ValueError:
+        st.warning("Please enter a whole number for custom goal steps.")
+        goal_steps = 7000
+else:
+    goal_steps = int(goal_option)
+
+current_steps_text = st.text_input("Current steps", value="1500")
+try:
+    current_steps = int(current_steps_text)
+    if current_steps < 0:
+        current_steps = 0
+    elif current_steps > 100000:
+        current_steps = 100000
+except ValueError:
+    st.warning("Please enter a whole number for current steps.")
+    current_steps = 1500
+
 custom_spm = 100
 if activity == "Custom":
-    custom_spm = st.sidebar.number_input(
-        "Your steps per minute",
-        min_value=1,
-        max_value=300,
-        value=100,
-        step=5,
-    )
+    custom_spm_text = st.text_input("Your steps per minute", value="100")
+    try:
+        custom_spm = int(custom_spm_text)
+        if custom_spm < 1:
+            custom_spm = 1
+        elif custom_spm > 300:
+            custom_spm = 300
+    except ValueError:
+        st.warning("Please enter a whole number for steps per minute.")
+        custom_spm = 100
 
 steps_per_minute = get_steps_per_minute(activity, custom_spm)
 
@@ -784,9 +802,9 @@ else:
         st.balloons()
         st.success("🌟 7 day streak! This is becoming a real habit.")
 
-    # if steps_remaining == 0:
-    # st.success("🎉 Goal reached. Beautiful work today.")
-    # st.balloons()
+   if steps_remaining == 0:
+    st.success("🎉 Goal reached. Beautiful work today.")
+    st.balloons()
 
     if steps_remaining == 0:
         st.success("🎉 Goal reached. Beautiful work today.")
