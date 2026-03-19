@@ -404,13 +404,14 @@ header {visibility: hidden;}
 # st.title("👣 Move Math")
 st.caption("Track your movement. Finish your goal.")
 
-st.sidebar.header("Settings")
+st.subheader("Choose your goal")
 
-goal_option = st.sidebar.radio(
-    "Pick a goal",
-    ["6000", "8000", "10000", "Custom"],
-    index=0,
+goal_option = st.radio(
+    "Pick a goal", ["6000", "8000", "10000", "Custom"], index=0, horizontal=True
 )
+
+
+st.sidebar.header("Settings")
 
 activity = st.sidebar.selectbox(
     "Activity type",
@@ -806,8 +807,5 @@ else:
 if steps_remaining == 0:
     st.success("🎉 Goal reached. Beautiful work today.")
     st.balloons()
-
-    st.markdown("### 🔊 Tap to celebrate your win")
-
-    if st.button("🎉 Play celebration sound"):
-        st.audio(open("success.mp3", "rb").read())
+    st.caption("Tap play below for your celebration sound.")
+    st.audio("success.mp3")
