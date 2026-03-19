@@ -14,6 +14,22 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+
+timezone_name = st.selectbox(
+    "Your time zone",
+    [
+        "America/New_York",
+        "America/Chicago",
+        "America/Denver",
+        "America/Los_Angeles",
+        "UTC",
+    ],
+    index=0,
+)
+
 st.set_page_config(layout="wide")
 
 st.markdown(
@@ -463,8 +479,22 @@ progress_percent = (current_steps / goal_steps) * 100 if goal_steps > 0 else 0
 progress_decimal = min(progress_percent / 100, 1.0)
 minutes_needed = steps_remaining / steps_per_minute if steps_per_minute > 0 else 0
 rounded_minutes = math.ceil(minutes_needed)
-finish_time = datetime.now() + timedelta(minutes=rounded_minutes)
-today_str = datetime.now().strftime("%Y-%m-%d")
+
+timezone_name = st.selectbox(
+    "Your time zone",
+    [
+        "America/New_York",
+        "America/Chicago",
+        "America/Denver",
+        "America/Los_Angeles",
+        "UTC",
+    ],
+    index=0,
+)
+
+now_local = datetime.now(ZoneInfo(timezone_name)).replace(second=0, microsecond=0)
+finish_time = now_local + timedelta(minutes=rounded_minutes)
+today_str = now_local.strftime("%Y-%m-%d")
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Goal", f"{goal_steps:,}")
