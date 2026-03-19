@@ -474,17 +474,27 @@ col3.metric("Remaining", f"{steps_remaining:,}")
 st.progress(progress_decimal)
 st.write(f"**Progress:** {progress_percent:.1f}%")
 
+if "celebrate_clicked" not in st.session_state:
+    st.session_state.celebrate_clicked = False
+
+if "goal_celebrated" not in st.session_state:
+    st.session_state.goal_celebrated = False
+
 if steps_remaining == 0:
     st.success("🎉 Goal reached. Amazing work today.")
-    st.balloons()
 
-    if st.button("Play celebration sound 🎉"):
-        st.audio("success.mp3")
+    if not st.session_state.goal_celebrated:
+        st.balloons()
+        st.session_state.goal_celebrated = True
+
+    st.caption("Tap play for your celebration sound.")
+    st.audio("success.mp3")
 else:
+    st.session_state.goal_celebrated = False
     st.info(get_message(progress_percent))
 
 if steps_remaining == 0:
-    st.success("🎉 Goal reached. Beautiful work today.")
+    st.success("🎉 Goal reached. You Did That!!!.")
     st.balloons()
 else:
     st.subheader("🎯 Your finish plan")
