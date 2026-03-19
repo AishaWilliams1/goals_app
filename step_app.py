@@ -411,9 +411,7 @@ goal_option = st.radio(
 )
 
 
-st.sidebar.header("Settings")
-
-activity = st.sidebar.selectbox(
+activity = st.selectbox(
     "Activity type",
     ["Regular walk", "Brisk walk", "Stairs", "March in place", "Custom"],
 )
@@ -475,7 +473,14 @@ col3.metric("Remaining", f"{steps_remaining:,}")
 
 st.progress(progress_decimal)
 st.write(f"**Progress:** {progress_percent:.1f}%")
-st.info(get_message(progress_percent))
+
+if steps_remaining == 0:
+    st.success("🎉 Goal reached. Beautiful work today.")
+    st.balloons()
+    st.caption("Tap play for your celebration sound.")
+    st.audio("success.mp3")
+else:
+    st.info(get_message(progress_percent))
 
 if steps_remaining == 0:
     st.success("🎉 Goal reached. Beautiful work today.")
