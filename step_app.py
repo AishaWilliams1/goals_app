@@ -802,17 +802,8 @@ else:
         st.balloons()
         st.success("🌟 7 day streak! This is becoming a real habit.")
 
-   if steps_remaining == 0:
-    st.success("🎉 Goal reached. Beautiful work today.")
-    st.balloons()
 
-    if steps_remaining == 0:
+if steps_remaining == 0:
     st.success("🎉 Goal reached. Beautiful work today.")
     st.balloons()
-        """
-        <audio autoplay>
-            <source src="success.mp3" type="audio/mp3">
-        </audio>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.audio("success.mp3")
