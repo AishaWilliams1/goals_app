@@ -7,13 +7,28 @@ import pandas as pd
 import streamlit as st
 
 
-st.set_page_config(
-    page_title="Move Math",
-    page_icon="👣",
-    layout="centered",
+st.markdown(
+    """
+<div style="
+    background: linear-gradient(135deg, #FFE5D9, #FFF8F2);
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+">
+    <h1 style="color:#C8553D;">👣 Move Math</h1>
+    <p style="font-size:18px; color:#5C3A21;">
+        Plan your steps. Structure your day. Finish strong.
+    </p>
+</div>
+""",
+    unsafe_allow_html=True,
 )
 
-
+st.image(
+    "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+    use_container_width=True,
+)
 st.html(
     """
 <style>
@@ -364,7 +379,7 @@ def build_plan_from_tasks(tasks, steps_remaining, steps_per_minute, min_walk_blo
     )
 
 
-st.title("👣 Move Math")
+# st.title("👣 Move Math")
 st.caption("Track your movement. Finish your goal.")
 
 st.sidebar.header("Settings")
@@ -432,11 +447,13 @@ if steps_remaining == 0:
     st.success("🎉 Goal reached. Beautiful work today.")
     st.balloons()
 else:
-    st.subheader("Your finish plan")
+    st.subheader("🎯 Your finish plan")
     st.write(f"**Activity selected:** {activity}")
     st.write(f"**Estimated pace:** {steps_per_minute} steps/min")
     st.write(f"**Minutes needed:** {minutes_needed:.1f}")
     st.write(f"**Finish around:** {finish_time.strftime('%I:%M %p')}")
+
+activities = {"🚶 Walk": 100, "⚡ Brisk walk": 130, "🧗 Stair climb": 180}
 
 st.subheader("Compare movement options")
 
@@ -450,9 +467,9 @@ with comp1:
     st.write(f"🚶 Regular walk: **{regular_minutes:.1f} min**")
     st.write(f"⚡ Brisk walk: **{brisk_minutes:.1f} min**")
 with comp2:
-    st.write(f"🪜 Stairs: **{stairs_minutes:.1f} min**")
+    st.write(f"🧗 Stairs: **{stairs_minutes:.1f} min**")
     st.write(f"🎵 March in place: **{march_minutes:.1f} min**")
-
+st.write("🧗 Stair climb (fastest way to finish)")
 st.subheader("Quick challenge")
 if steps_remaining > 0:
     if st.button("Give me a simple plan"):
@@ -749,3 +766,21 @@ if streak >= 3:
 if streak >= 7:
     st.balloons()
     st.success("🌟 7 day streak! This is a new identity forming.")
+
+#if steps_remaining == 0:
+    #st.success("🎉 Goal reached. Beautiful work today.")
+    #st.balloons()
+
+   
+
+    if steps_remaining == 0:
+     st.success("🎉 Goal reached. Beautiful work today.")
+    st.balloons()
+    st.markdown(
+        """
+        <audio autoplay>
+            <source src="success.mp3" type="audio/mp3">
+        </audio>
+        """,
+        unsafe_allow_html=True,
+    )
