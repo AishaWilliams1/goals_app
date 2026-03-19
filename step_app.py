@@ -475,10 +475,11 @@ st.progress(progress_decimal)
 st.write(f"**Progress:** {progress_percent:.1f}%")
 
 if steps_remaining == 0:
-    st.success("🎉 Goal reached. Beautiful work today.")
+    st.success("🎉 Goal reached. Amazing work today.")
     st.balloons()
-    st.caption("Tap play for your celebration sound.")
-    st.audio("success.mp3")
+
+    if st.button("Play celebration sound 🎉"):
+        st.audio("success.mp3")
 else:
     st.info(get_message(progress_percent))
 
@@ -807,10 +808,3 @@ else:
     if streak >= 7:
         st.balloons()
         st.success("🌟 7 day streak! This is becoming a real habit.")
-
-
-if steps_remaining == 0:
-    st.success("🎉 Goal reached. Beautiful work today.")
-    st.balloons()
-    st.caption("Tap play below for your celebration sound.")
-    st.audio("success.mp3")
