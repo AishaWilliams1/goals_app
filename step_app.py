@@ -212,9 +212,28 @@ def get_message(progress_percent: float) -> str:
 def load_history() -> pd.DataFrame:
     if DATA_FILE.exists():
         df = pd.read_csv(DATA_FILE)
+
+        expected_cols = [
+            "date",
+            "goal_steps",
+            "current_steps",
+            "steps_remaining",
+            "activity",
+            "steps_per_minute",
+            "minutes_needed",
+            "hit_goal",
+        ]
+
+        for col in expected_cols:
+            if col not in df.columns:
+                df[col] = None
+
         if "date" in df.columns:
-            df["date"] = pd.to_datetime(df["date"])
+            df["date"] = pd.to_datetime(df["date"], errors="coerce")
+            df = df.dropna(subset=["date"])
+
         return df
+
     return pd.DataFrame(
         columns=[
             "date",
@@ -758,18 +777,23 @@ if st.button("Build plan around my tasks"):
 
 st.subheader("Save today")
 
+save_code = st.text_input("Save code", type="password")
+
 if st.button("Save Today’s Progress"):
-    save_today_record(
-        date_value=today_str,
-        goal_steps=goal_steps,
-        current_steps=current_steps,
-        steps_remaining=steps_remaining,
-        activity=activity,
-        steps_per_minute=steps_per_minute,
-        minutes_needed=minutes_needed,
-        hit_goal=(steps_remaining == 0),
-    )
-    st.success("Today’s progress saved.")
+    if save_code == st.secrets["SAVE_CODE"]:
+        save_today_record(
+            date_value=today_str,
+            goal_steps=goal_steps,
+            current_steps=current_steps,
+            steps_remaining=steps_remaining,
+            activity=activity,
+            steps_per_minute=steps_per_minute,
+            minutes_needed=minutes_needed,
+            hit_goal=(steps_remaining == 0),
+        )
+        st.success("Today’s progress saved.")
+    else:
+        st.error("Incorrect save code.")
 
 history_df = load_history()
 
