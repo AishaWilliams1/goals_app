@@ -775,25 +775,29 @@ if st.button("Build plan around my tasks"):
     except ValueError:
         st.error("Please enter all times like 1:35 PM or 6:00 PM.")
 
-st.subheader("Save today")
+with st.expander("Private save for app owner"):
+    save_code = st.text_input("Save code", type="password")
+    save_secret = st.secrets.get("SAVE_CODE", None)
 
-save_code = st.text_input("Save code", type="password")
-
-if st.button("Save Today’s Progress"):
-    if save_code == st.secrets["SAVE_CODE"]:
-        save_today_record(
-            date_value=today_str,
-            goal_steps=goal_steps,
-            current_steps=current_steps,
-            steps_remaining=steps_remaining,
-            activity=activity,
-            steps_per_minute=steps_per_minute,
-            minutes_needed=minutes_needed,
-            hit_goal=(steps_remaining == 0),
-        )
-        st.success("Today’s progress saved.")
-    else:
-        st.error("Incorrect save code.")
+    if st.button("Save Today’s Progress"):
+        if not save_secret:
+            st.info("Saving is not available right now.")
+        elif not save_code:
+            st.info("Enter the save code to save progress.")
+        elif save_code == save_secret:
+            save_today_record(
+                date_value=today_str,
+                goal_steps=goal_steps,
+                current_steps=current_steps,
+                steps_remaining=steps_remaining,
+                activity=activity,
+                steps_per_minute=steps_per_minute,
+                minutes_needed=minutes_needed,
+                hit_goal=(steps_remaining == 0),
+            )
+            st.success("Today’s progress saved.")
+        else:
+            st.error("Incorrect save code.")
 
 history_df = load_history()
 
