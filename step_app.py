@@ -1,21 +1,11 @@
 import math
 from datetime import datetime, timedelta
 from pathlib import Path
-import altair as alt
-
-import pandas as pd
-import streamlit as st
-
-import math
-from datetime import datetime, timedelta
-from pathlib import Path
-import altair as alt
-
-import pandas as pd
-import streamlit as st
-
-from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+
+import altair as alt
+import pandas as pd
+import streamlit as st
 
 
 st.set_page_config(layout="wide")
